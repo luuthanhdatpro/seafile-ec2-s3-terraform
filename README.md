@@ -1,7 +1,5 @@
 # Seafile EC2/S3 Terraform project
 
-[![CircleCI](https://circleci.com/gh/berenbums/seafile-ec2-s3-terraform.svg?style=shield)](https://app.circleci.com/pipelines/github/berenbums/seafile-ec2-s3-terraform)
-
 ## Description
 Terraform project to provision a [Seafile](https://www.seafile.com/en/home/) server (Community Edition) on EC2 and configure an S3 bucket as back end.
 Seafile is installed using an [nginx](https://www.nginx.com/) webserver and a [MariaDB](https://mariadb.org/) database.
@@ -21,9 +19,8 @@ In addition to that, this project includes:
 
 ## Prerequisites
 Before the installation, make sure to have the following prepared:
-- Hosted zone in Amazon Route 53, where the DNS record for Seafile can be created
+- AWS account
 - SSH key uploaded to the Amazon EC2 console (in the region where the resources will be created)
-- TLS certificate that Terraform can upload to the Seafile server.
 
 ## Installation
 Clone this repostory, set all parameters in the `terraform.tfvars` file, and deploy the project:
@@ -39,9 +36,9 @@ Front end URL: `https://example.com/seafile/`.
 ## Tested with
 | Name | Version |
 |------|---------|
-| Terraform | 0.13.5 |
-| Provider aws | 3.12.0 |
+| Terraform | 1.4.5 |
+| Provider aws | 5.93.0 |
 | Provider template | 2.2.0 |
 
-AWS regions: eu-west-1, us-east-1  
+AWS regions: ap-south-1  
 EC2 instance type: t3.micro (1 GB RAM)
