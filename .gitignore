@@ -1,3 +1,4 @@
 seafile-instance.pem
-.terraform*
+.terraform/*
+.terraform.lock.hcl
 *.tfstate*
