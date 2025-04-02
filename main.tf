@@ -1,10 +1,11 @@
 provider "aws" {
   region = var.aws_region
+  max_retries = 5
 }
 
 # The Seafile server
 resource "aws_instance" "ec2_instance" {
-  ami                         = data.aws_ami.amazon-linux-2.id
+  ami                         = data.aws_ami.ubuntu_24.id
   associate_public_ip_address = true
   instance_type               = var.instance_type
   key_name                    = var.key_name
@@ -28,11 +29,11 @@ resource "aws_instance" "ec2_instance" {
   }
 }
 
-# Route53 record for the Seafile front end
-resource "aws_route53_record" "dns_record" {
-  zone_id = var.hosted_zone
-  name    = "${var.dns_record}."
-  type    = "A"
-  ttl     = "300"
-  records = [aws_instance.ec2_instance.public_ip]
-}
+# # Route53 record for the Seafile front end
+# resource "aws_route53_record" "dns_record" {
+#   zone_id = var.hosted_zone
+#   name    = "${var.dns_record}."
+#   type    = "A"
+#   ttl     = "300"
+#   records = [aws_instance.ec2_instance.public_ip]
+# }

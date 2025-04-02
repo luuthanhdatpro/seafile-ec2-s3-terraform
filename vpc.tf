@@ -33,6 +33,16 @@ resource "aws_default_route_table" "default" {
   }
 }
 
+# Get the public IP address dynamically
+data "http" "my_ip" {
+  url = "http://checkip.amazonaws.com/"
+}
+
+# Create the CIDR block using your IP
+locals {
+  my_ip_cidr = "${chomp(data.http.my_ip.body)}/32"
+}
+
 resource "aws_default_security_group" "default" {
   vpc_id = aws_vpc.vpc.id
 
@@ -50,7 +60,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = var.sg_cidr
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   ingress {
@@ -58,7 +68,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = var.sg_cidr
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   ingress {
@@ -66,7 +76,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = var.sg_cidr
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   ingress {
@@ -74,7 +84,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 8082
     to_port     = 8082
     protocol    = "tcp"
-    cidr_blocks = var.sg_cidr
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   ingress {
@@ -82,7 +92,7 @@ resource "aws_default_security_group" "default" {
     from_port   = 8000
     to_port     = 8000
     protocol    = "tcp"
-    cidr_blocks = var.sg_cidr
+    cidr_blocks = [local.my_ip_cidr]
   }
 
   # Default egress rule

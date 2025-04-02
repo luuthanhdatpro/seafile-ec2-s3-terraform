@@ -63,16 +63,6 @@ variable "dns_record" {
   description = "DNS record (type A) for the webserver, to be created in Route53"
 }
 
-variable "server_cert_path" {
-  type        = string
-  description = "Local path to the .crt file of the SSL/TLS certificate to be uploaded to the Seafile server"
-}
-
-variable "server_key_path" {
-  type        = string
-  description = "Local path to the .key file of the SSL/TLS certificate to be uploaded to the Seafile server"
-}
-
 locals {
   project_name      = "Seafile"
   s3fs_endpoint_url = var.aws_region == "us-east-1" ? "https://s3.amazonaws.com" : "https://s3-${var.aws_region}.amazonaws.com"

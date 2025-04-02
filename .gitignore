@@ -1,0 +1,3 @@
+seafile-instance.pem
+.terraform*
+*.tfstate*
